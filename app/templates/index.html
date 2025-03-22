@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stroke Risk Assessment Tool</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/breakdown.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Dark Mode Toggle -->
+<button id="darkModeToggle" class="dark-mode-toggle" title="Toggle dark/light mode">
+  <i class="fas fa-sun"></i>
+</button>
+
+<div class="container-fluid py-5">
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-10 text-center">
+      <h1 class="display-4 fw-bold mb-3" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+        <i class="fas fa-heartbeat me-3"></i>Stroke Risk Assessment Tool
+      </h1>
+      <p class="lead text-white mb-0">Complete the form below to assess your stroke risk and receive personalized health recommendations</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <!-- Form Column -->
+    <div class="col-md-6 col-lg-5 mb-4 mb-md-0 form-column">
+      <div class="card shadow-lg h-100">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Personal Information</h2>
+
+          <!-- Form Progress Bar -->
+          <div class="form-progress mb-4">
+            <div class="form-progress-bar">
+              <div class="form-progress-bar-inner" style="width: 0%"></div>
+            </div>
+            <div class="form-progress-text">0/10 fields completed (0%)</div>
+          </div>
+
+          <!-- Health Metrics Dashboard -->
+          <div class="health-metrics mb-4">
+            <h5 class="mb-3"><i class="fas fa-chart-bar"></i>Your Health Metrics</h5>
+            
+            <!-- Hypertension Metric -->
+            <div class="health-metric">
+              <div class="health-metric-title">
+                <span>Hypertension: <span id="hypertensionValue">No</span></span>
+                <span class="risk-indicator">Risk</span>
+              </div>
+              <div class="progress">
+                <div id="hypertensionMetric" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+              </div>
+            </div>
+            
+            <!-- Heart Disease Metric -->
+            <div class="health-metric">
+              <div class="health-metric-title">
+                <span>Heart Disease: <span id="heart_diseaseValue">No</span></span>
+                <span class="risk-indicator">Risk</span>
+              </div>
+              <div class="progress">
+                <div id="heart_diseaseMetric" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+              </div>
+            </div>
+            
+            <!-- Smoking Metric -->
+            <div class="health-metric">
+              <div class="health-metric-title">
+                <span>Smoking Status: <span id="smoking_statusValue">Unknown</span></span>
+                <span class="risk-indicator">Risk</span>
+              </div>
+              <div class="progress">
+                <div id="smoking_statusMetric" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BMI Calculator -->
+          <div class="bmi-calculator mb-4">
+            <h5 class="mb-3"><i class="fas fa-calculator"></i>BMI Calculator</h5>
+            <div class="row g-2">
+              <div class="col-6">
+                <div class="form-floating">
+                  <input type="number" class="form-control" id="height" placeholder="Height in cm" min="100" max="250">
+                  <label for="height">Height (cm)</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating">
+                  <input type="number" class="form-control" id="weight" placeholder="Weight in kg" min="30" max="200">
+                  <label for="weight">Weight (kg)</label>
+                </div>
+              </div>
+            </div>
+            <button id="calculateBmi" class="btn btn-info w-100 mt-2">
+              <i class="fas fa-calculator me-2"></i>Calculate BMI
+            </button>
+            <div id="bmiResult" class="bmi-result mt-2">Enter height and weight</div>
+          </div>
+
+          <form id="strokeForm">
+            <!-- Basic Information Section -->
+            <div class="form-section">
+              <h3 class="form-section-title"><i class="fas fa-user-circle"></i>Basic Information</h3>
+            
+              <!-- Gender -->
+              <div class="form-group mb-3">
+                <label for="gender" class="form-label"><i class="fas fa-venus-mars"></i>Gender:</label>
+                <select id="gender" name="gender" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <!-- Age with Slider -->
+              <div class="form-group mb-3">
+                <label for="age" class="form-label"><i class="fas fa-user-clock"></i>Age:</label>
+                <div class="input-group mb-2">
+                  <input type="number" id="age" name="age" class="form-control" min="0" max="120" value="35" required>
+                  <span class="input-group-text">years</span>
+                </div>
+                <div class="age-slider-container">
+                  <input type="range" class="age-slider form-range" id="ageSlider" min="0" max="120" value="35">
+                  <span class="age-value-display">35</span>
+                </div>
+              </div>
+
+              <!-- Ever Married -->
+              <div class="form-group mb-3">
+                <label for="ever_married" class="form-label"><i class="fas fa-ring"></i>Ever Married:</label>
+                <select id="ever_married" name="ever_married" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Lifestyle Section -->
+            <div class="form-section">
+              <h3 class="form-section-title"><i class="fas fa-home"></i>Lifestyle Factors</h3>
+
+              <!-- Work Type -->
+              <div class="form-group mb-3">
+                <label for="work_type" class="form-label"><i class="fas fa-briefcase"></i>Work Type:</label>
+                <select id="work_type" name="work_type" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="Private">Private</option>
+                  <option value="Self-employed">Self-employed</option>
+                  <option value="Govt_job">Government Job</option>
+                  <option value="Children">Children</option>
+                  <option value="Never_worked">Never Worked</option>
+                </select>
+              </div>
+
+              <!-- Residence Type -->
+              <div class="form-group mb-3">
+                <label for="Residence_type" class="form-label"><i class="fas fa-home"></i>Residence Type:</label>
+                <select id="Residence_type" name="Residence_type" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="Urban">Urban</option>
+                  <option value="Rural">Rural</option>
+                </select>
+              </div>
+
+              <!-- Smoking Status -->
+              <div class="form-group mb-3">
+                <label for="smoking_status" class="form-label"><i class="fas fa-smoking"></i>Smoking Status:</label>
+                <select id="smoking_status" name="smoking_status" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="never smoked">Never Smoked</option>
+                  <option value="formerly smoked">Formerly Smoked</option>
+                  <option value="smokes">Currently Smokes</option>
+                  <option value="unknown">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Health Conditions Section -->
+            <div class="form-section">
+              <h3 class="form-section-title"><i class="fas fa-heartbeat"></i>Health Conditions</h3>
+
+              <!-- Hypertension -->
+              <div class="form-group mb-3">
+                <label for="hypertension" class="form-label"><i class="fas fa-heartbeat"></i>Hypertension:</label>
+                <select id="hypertension" name="hypertension" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+                </select>
+                <small class="form-text">Do you have high blood pressure?</small>
+              </div>
+
+              <!-- Heart Disease -->
+              <div class="form-group mb-3">
+                <label for="heart_disease" class="form-label"><i class="fas fa-heart"></i>Heart Disease:</label>
+                <select id="heart_disease" name="heart_disease" class="form-select" required>
+                  <option value="">Select...</option>
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+                </select>
+                <small class="form-text">Do you have any heart conditions?</small>
+              </div>
+
+              <!-- Avg Glucose Level -->
+              <div class="form-group mb-3">
+                <label for="avg_glucose_level" class="form-label"><i class="fas fa-tint"></i>Avg Glucose Level:</label>
+                <div class="input-group">
+                  <input type="number" step="0.1" id="avg_glucose_level" name="avg_glucose_level" class="form-control" min="50" max="300" required>
+                  <span class="input-group-text">mg/dL</span>
+                </div>
+              </div>
+
+              <!-- BMI -->
+              <div class="form-group mb-3">
+                <label for="bmi" class="form-label"><i class="fas fa-weight"></i>BMI (Body Mass Index):</label>
+                <input type="number" step="0.1" id="bmi" name="bmi" class="form-control" min="10" max="60" required>
+                <small class="form-text">Use the BMI calculator above or enter directly</small>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-brain"></i>ANALYZE STROKE RISK
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Results and Feedback Column -->
+    <div class="col-md-6 col-lg-6 results-column">
+      <div class="card shadow-lg h-100">
+        <div class="card-body results-container">
+          <h2 class="card-title text-center mb-4">Analysis Results</h2>
+          
+          <!-- Initial message when no prediction has been made -->
+          <div id="initialMessage">
+            <div class="no-data-message">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <h4>No data analyzed yet</h4>
+              <p>Complete the form on the left and click "Analyze Stroke Risk" to see your personalized assessment and health recommendations.</p>
+            </div>
+            
+            <h5 class="text-center mb-4">Why use this tool?</h5>
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <h6>Risk Assessment</h6>
+                <p>Get a personalized stroke risk prediction based on your health profile</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <h6>Health Insights</h6>
+                <p>Understand which factors may be contributing to your stroke risk</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="fas fa-heartbeat"></i>
+                </div>
+                <h6>Health Tips</h6>
+                <p>Receive customized recommendations to improve your health</p>
+              </div>
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="fas fa-book-medical"></i>
+                </div>
+                <h6>Educational Resources</h6>
+                <p>Access reliable health information from trusted sources</p>
+              </div>
+            </div>
+          </div>
+          
+          <div id="result" style="display: none;">
+            <div id="loadingSpinner" class="text-center py-5">
+              <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-3 text-white">Analyzing your data...</p>
+            </div>
+            
+            <div id="predictionResult"></div>
+            <div id="feedbackContainer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <div class="row mt-4">
+    <div class="col-12 text-center text-white-50">
+      <p class="mb-0 small">This tool is for educational purposes only. Always consult with healthcare professionals for medical advice.</p>
+      <p class="mb-0 small">© 2023 Stroke Risk Assessment Tool | Powered by Machine Learning</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,439 @@
+/* Enhanced Styles for Larger Stroke Risk Factor Breakdown Window */
+
+/* Compact Layout Styling */
+.compact-risk-layout {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    height: 100%;
+    overflow: hidden;
+}
+
+.key-insight-section {
+    padding: 1.25rem 1.75rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.key-insight-box {
+    padding: 0;
+    background: none;
+    border-bottom: none;
+}
+
+.key-insight-box h5 {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+}
+
+.key-factor {
+    margin-bottom: 0.75rem;
+}
+
+.insight-message {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.factors-table-container {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.5rem;
+}
+
+.enhanced-factors-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    table-layout: fixed;
+    font-size: 1rem;
+}
+
+.enhanced-factors-table th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.enhanced-factors-table td {
+    padding: 0.85rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.factor-detail-container {
+    padding: 0 1.75rem 1.5rem 1.75rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.factor-detail-box {
+    padding: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-top: 1.25rem;
+}
+
+.factor-detail-box h6 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.factor-detail-box h6 i {
+    color: #40c4ff;
+    margin-right: 0.75rem;
+}
+
+.factor-detail-box p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.highlight-detail {
+    animation: fadeContent 0.3s ease-out forwards;
+    will-change: opacity, transform;
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
+}
+
+/* Contribution scale styling */
+.contribution-scale-wrapper {
+    height: 1.375rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 0.6875rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.contribution-scale {
+    height: 100%;
+    border-radius: 0.6875rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.625rem;
+    min-width: 1.375rem;
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Impact badges */
+.impact-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Expanded box specific styles */
+.expanding-prediction-box.expanded {
+    overflow: hidden;
+    padding: 0;
+    transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.expanded-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #1e2735;
+    will-change: opacity;
+    transform: translate3d(0, 0, 0);
+    flex-shrink: 0;
+}
+
+.expanded-title {
+    margin: 0;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.expanded-body {
+    padding: 0;
+    background-color: #121921;
+    color: white;
+    will-change: opacity;
+    transform: translate3d(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.expanded-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #1e2735;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    will-change: opacity;
+    transform: translate3d(0, 0, 0);
+    flex-shrink: 0;
+}
+
+/* High Zoom Specific Styling */
+.expanding-prediction-box.high-zoom .expanded-title {
+    font-size: 1.1rem;
+}
+
+.expanding-prediction-box.high-zoom .enhanced-factors-table th {
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+}
+
+.expanding-prediction-box.high-zoom .enhanced-factors-table td {
+    padding: 0.7rem 1rem;
+}
+
+.expanding-prediction-box.high-zoom .factor-detail-box h6 {
+    font-size: 1rem;
+}
+
+.expanding-prediction-box.high-zoom .factor-detail-box p {
+    font-size: 0.9rem;
+}
+
+.expanding-prediction-box.high-zoom .key-insight-box h5 {
+    font-size: 1rem;
+}
+
+.expanding-prediction-box.high-zoom .insight-message {
+    font-size: 0.9rem;
+}
+
+/* Active row styling for better visibility */
+.factor-row.active {
+    background-color: rgba(33, 150, 243, 0.15);
+    position: relative;
+}
+
+.factor-row.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #2196F3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .expanding-prediction-box.expanded {
+        width: 95% !important;
+        height: 90vh !important;
+        max-height: 90vh !important;
+    }
+    
+    .expanded-title {
+        font-size: 1.1rem;
+    }
+    
+    .factor-name-cell, .impact-badge {
+        font-size: 0.9rem;
+    }
+    
+    .scale-value {
+        font-size: 0.8rem;
+    }
+    
+    .compact-risk-layout {
+        grid-template-rows: auto 1fr auto;
+    }
+    
+    .key-insight-section {
+        padding: 0.75rem 1rem;
+    }
+    
+    .enhanced-factors-table th,
+    .enhanced-factors-table td {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+/* Styles for very high zoom levels */
+@media screen and (min-resolution: 1.25dppx) {
+    .expanded-header, .expanded-footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    .key-insight-section {
+        padding: 1rem 1.25rem;
+    }
+    
+    .factor-detail-container {
+        padding: 0 1.25rem 1rem 1.25rem;
+    }
+    
+    .enhanced-factors-table th {
+        padding: 0.75rem 1rem;
+    }
+    
+    .enhanced-factors-table td {
+        padding: 0.6rem 1rem;
+    }
+    
+    .expanded-title {
+        font-size: 1.1rem;
+    }
+    
+    .key-insight-box h5 {
+        font-size: 1rem;
+    }
+    
+    .insight-message {
+        font-size: 0.9rem;
+    }
+    
+    .factor-detail-box h6 {
+        font-size: 1rem;
+    }
+    
+    .factor-detail-box p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Content fade animations */
+.content-fade-out {
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
+}
+
+.content-fade-in {
+    opacity: 1;
+    transition: opacity 0.25s ease-in;
+}
+
+/* Expanded Box Content Styling */
+.expanded-close {
+    background: none;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    will-change: transform, background-color;
+    transform: translate3d(0, 0, 0);
+}
+
+.expanded-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: scale(1.1) translate3d(0, 0, 0);
+}
+
+.expanded-action-button {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    will-change: transform;
+}
+
+.expanded-action-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Animation for content entrance */
+@keyframes fadeContent {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Zoom helper classes */
+.scroll-visible-on-zoom {
+    overflow: auto !important;
+}
+
+.smaller-text-on-zoom {
+    font-size: 0.9em !important;
+}
+
+/* Additional responsive styles for better zoom handling */
+@media screen and (max-height: 700px), screen and (max-width: 700px) {
+    .key-insight-section {
+        padding: 0.75rem 1rem;
+    }
+    
+    .factors-table-container {
+        padding: 0 0.25rem;
+    }
+    
+    .factor-detail-container {
+        padding: 0 1rem 1rem 1rem;
+    }
+    
+    .factor-detail-box {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .enhanced-factors-table th,
+    .enhanced-factors-table td {
+        padding: 0.6rem 0.8rem;
+    }
+}
+
+/* Styles for maximum zoom levels */
+@media screen and (min-resolution: 2dppx) {
+    .expanding-prediction-box.expanded {
+        font-size: 0.85rem;
+    }
+    
+    .expanded-header, .expanded-footer {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .key-insight-section {
+        padding: 0.8rem 1rem;
+    }
+    
+    .enhanced-factors-table th,
+    .enhanced-factors-table td {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .impact-badge {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    .contribution-scale-wrapper {
+        height: 1.25rem;
+    }
+} 

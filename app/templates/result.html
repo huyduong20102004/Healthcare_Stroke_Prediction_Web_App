@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg">
+            <div class="card-body text-center">
+                <h2 class="card-title text-center mb-4">Prediction Result</h2>
+
+                <div class="alert {% if prediction == 1 %}alert-danger{% else %}alert-success{% endif %}" role="alert">
+                    {% if prediction == 1 %}
+                        <i class="fas fa-exclamation-triangle"></i> High risk of stroke detected!
+                    {% else %}
+                        <i class="fas fa-check-circle"></i> Low risk of stroke. Keep a healthy lifestyle!
+                    {% endif %}
+                </div>
+
+                <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
